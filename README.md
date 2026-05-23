@@ -22,11 +22,14 @@ A React frontend for browsing Blue Archive character data. One of my earliest pr
 
 ## Screenshots
 
+**HOME:**  
+![page-home](/screenshots/home.png)
+
 **ALL CHARACTERS:**  
-![page-all-characters](/Screenshots/page_All_Characters.png)
+![page-all-characters](/screenshots/characters-list.png)
 
 **ABOUT:**  
-![page-about](/Screenshots/page_about.png)
+![page-about](/screenshots/about.png)
 
 ## Notes
 
