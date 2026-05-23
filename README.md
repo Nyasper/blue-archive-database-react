@@ -31,3 +31,4 @@ A React frontend for browsing Blue Archive character data. One of my earliest pr
 ## Notes
 
 This was my first React project -- simple but meaningful. It's where I learned React component architecture and state management. The app is frontend-only and loads character data from a local JSON file served by Vite.
+I do not own any of the materials, including images, data, trademarks, or other related content used in this project. All rights belong to their respective owners.
