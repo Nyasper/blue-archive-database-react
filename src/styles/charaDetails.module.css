@@ -2,17 +2,46 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative; /* Stacking context */
+	overflow: hidden; /* Clips the background blur */
 
 	margin: 0 auto;
-	margin-top: 50px;
-	width: 60%;
+	margin-top: 40px;
+	width: 75%;
+	max-width: 1200px;
 	max-height: 80vh;
 	height: 80vh;
-	background-color: var(--mica-bg);
+	background-color: rgba(0, 0, 0, 0.25); /* Darker backdrop to make content readable over blur */
 	backdrop-filter: var(--mica-blur);
 	border: var(--mica-border);
-	border-radius: 20px;
+	border-radius: 24px;
 	box-shadow: var(--shadow-base);
+}
+
+/* Background Ambient Blur */
+.charaAmbientBg {
+	position: absolute;
+	top: -15%;
+	left: -15%;
+	width: 130%;
+	height: 130%;
+	object-fit: cover;
+	filter: blur(40px) opacity(0.3);
+	pointer-events: none;
+	z-index: 1;
+	transform: scale(1.05);
+	animation: charaBgFadeIn 0.8s ease-out forwards;
+}
+
+@keyframes charaBgFadeIn {
+	0% {
+		opacity: 0;
+		filter: blur(50px) opacity(0);
+	}
+	100% {
+		opacity: 1;
+		filter: blur(40px) opacity(0.3);
+	}
 }
 
 .imgContainer {
@@ -20,21 +49,41 @@
 	align-items: center;
 	justify-content: center;
 	height: 100%;
-	width: 100%;
-	padding: 15px;
+	width: 45%;
+	padding: 20px;
+	z-index: 2;
+	position: relative;
 }
 
 .charaFullImage {
 	object-fit: contain;
 	margin: auto;
-	height: 100%;
-	width: 100%;
-	filter: drop-shadow(0 0 15px var(--glow-color));
-	transition: filter 0.3s ease;
+	height: 105%; /* Make it slightly pop out */
+	width: 105%;
+	filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px var(--glow-color));
+	transition: filter 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .charaFullImage:hover {
-	filter: drop-shadow(0 0 25px var(--glow-color));
+	filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 25px var(--glow-color));
+	transform: scale(1.02);
+}
+
+.charaEntranceAnim {
+	animation: charaDetailsEntrance 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes charaDetailsEntrance {
+	0% {
+		opacity: 0;
+		transform: scale(0.96) translateY(15px);
+		filter: blur(10px) drop-shadow(0 0 15px var(--glow-color));
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+		filter: blur(0px) drop-shadow(0 8px 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px var(--glow-color));
+	}
 }
 
 .mediaIcon {
@@ -42,61 +91,117 @@
 }
 
 #charaViewContainer a {
-	color: rgb(72, 117, 214);
+	color: #8ac2ff;
 }
 
 /* Table Info */
 .tableContainer {
-	width: 100%;
-	padding: 0 10px;
+	width: 55%;
+	padding: 40px;
+	z-index: 2;
+	position: relative;
 }
 
 table {
-	table-layout: fixed;
+	width: 100%;
 	border-collapse: collapse;
-	border-radius: 10px;
-	border-spacing: 0;
-
-	text-align: center;
-	overflow: hidden;
+	text-align: left;
 }
 
-table th,
-table td {
-	/* border: 1px solid #ccc; */
-	padding: 8px;
-	/* text-align: center; */
+table tr {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	transition: background-color 0.2s ease;
+}
+
+table tr:last-child {
+	border-bottom: none;
+}
+
+table tr:hover {
+	background-color: rgba(255, 255, 255, 0.02);
+}
+
+table th {
+	padding: 14px 10px;
+	font-size: 0.85em;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 700;
+	width: 35%;
 	vertical-align: middle;
 }
 
-button {
-	margin-left: 10px !important;
+table td {
+	padding: 14px 10px;
+	color: #ffffff;
+	font-weight: 500;
+	font-size: 1.05em;
+	vertical-align: middle;
 }
 
-@media (max-width: 768px) {
+table td a {
+	color: #8ac2ff !important;
+	font-weight: 600;
+	transition: all 0.2s ease;
+}
+
+table td a:hover {
+	color: #a4d5ff !important;
+	text-shadow: 0 0 8px rgba(138, 194, 255, 0.5);
+	text-decoration: underline;
+}
+
+/* Audio Play Button styling override */
+.tableContainer button {
+	margin-left: 20px !important;
+	width: 38px !important;
+	height: 38px !important;
+	min-width: 38px !important;
+	padding: 0 !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	background: linear-gradient(135deg, #5ea9ff 0%, #3f73b6 100%) !important;
+	border-radius: 12px !important;
+	font-weight: 700 !important;
+	font-size: 1.1em !important;
+	box-shadow: 0 0 10px rgba(94, 169, 255, 0.3) !important;
+	color: white !important;
+	transition: all 0.25s ease !important;
+	border: none !important;
+	cursor: pointer;
+}
+
+.tableContainer button:hover {
+	transform: translateY(-1px) !important;
+	box-shadow: 0 0 15px rgba(94, 169, 255, 0.5) !important;
+}
+
+@media (max-width: 992px) {
 	#charaViewContainer {
 		flex-direction: column;
-		width: 100%;
-		max-width: none;
+		width: 95%;
 		max-height: none;
-		height: max-content;
+		height: auto;
+		margin: 20px auto;
+		padding: 20px 0;
+	}
 
-		margin: 0;
-		padding: 0;
-		border: none;
+	.imgContainer {
+		width: 100%;
+		height: 450px;
+		padding: 10px;
+	}
 
-		.imgContainer {
-			padding: 0;
-			margin: 20px 0;
-			width: 100%;
-		}
+	.charaFullImage {
+		height: 100%;
+		width: auto;
+		max-height: 400px;
+	}
 
-		.charaFullImage {
-			margin: 0;
-			padding: 0;
-			object-fit: contain;
-			max-width: 100%;
-			max-height: 600px;
-		}
+	.tableContainer {
+		width: 100%;
+		padding: 20px;
 	}
 }

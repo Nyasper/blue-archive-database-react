@@ -1,24 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { StoreContext } from '../stores/storeContext';
 
-// export const mode = 'http://localhost:3000'; //localhost
-// export const mode = 'https://proyecto-2-backend.vercel.app'; //vercel cloud
-
-// function manageResponseUrl(url = 'all', data = []) {
-// 	// filter by Category
-// 	if (url.includes('category/') && url.includes('?value=')) {
-// 		const categoryName = url.split('category/')[1].split('?')[0];
-// 		const categoryValue = url.split('?value=')[1];
-// 		return data.filter((c) => c[categoryName] == categoryValue);
-// 	}
-
-// 	// filter by charaName
-// 	const byCharaName = data.find((c) => c.charaName === url);
-// 	if (byCharaName) return byCharaName;
-
-// 	return data;
-// }
-
 export function useFetch<T>(url: string) {
 	const store = useContext(StoreContext);
 

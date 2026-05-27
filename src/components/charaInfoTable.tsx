@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
 	categoriesNoUrl,
 	getStudentMedia,
@@ -12,7 +12,16 @@ import { Button } from '@mui/material';
 
 export function CharaInfoTable({ categories, chara }: Props) {
 	function renderCategories() {
-		return categories.map((categoryName) => (
+		const hasBothIdentical = chara.designer && chara.illustrator && chara.designer === chara.illustrator;
+
+		const filteredCategories = categories.filter(key => {
+			if (hasBothIdentical && (key === 'designer' || key === 'illustrator')) {
+				return false;
+			}
+			return true;
+		});
+
+		const rows = filteredCategories.map((categoryName) => (
 			<tr key={categoryName}>
 				<th>{handleCategoryName(categoryName)}</th>
 
@@ -30,25 +39,61 @@ export function CharaInfoTable({ categories, chara }: Props) {
 					</td>
 				) : (
 					<td>
-						{handleCategoryName(chara[categoryName] as 'voice')}
-						<audio src={getStudentMedia(chara, 'audio')} ref={audioRef}></audio>
-						<Button type="button" onClick={playAudio} variant="contained">
-							Play
+						{handleCategoryValue(categoryName, String(chara[categoryName]))}
+						<audio
+							src={getStudentMedia(chara, 'audio')}
+							ref={audioRef}
+							onPlay={() => setIsPlaying(true)}
+							onPause={() => setIsPlaying(false)}
+							onEnded={() => setIsPlaying(false)}
+						></audio>
+						<Button type="button" onClick={handlePlayStop} variant="contained">
+							{isPlaying ? '■' : '▶'}
 						</Button>
 					</td>
 				)}
 			</tr>
 		));
+
+		if (hasBothIdentical) {
+			const originalIndex = categories.findIndex(key => key === 'designer' || key === 'illustrator');
+			const combinedRow = (
+				<tr key="designer-illustrator">
+					<th>Designer/Illustrator</th>
+					<td>
+						<Link to={`/characters/category/illustrator/${chara.illustrator}`}>
+							{chara.illustrator}
+						</Link>
+					</td>
+				</tr>
+			);
+			if (originalIndex !== -1) {
+				rows.splice(originalIndex, 0, combinedRow);
+			} else {
+				rows.push(combinedRow);
+			}
+		}
+
+		return rows;
 	}
+
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	//Audio Play
 	//refs
 	const audioRef = useRef<HTMLAudioElement>(null);
 
-	const playAudio = () => {
+	const handlePlayStop = () => {
 		if (!audioRef.current) return;
-		audioRef.current.volume = 0.2;
-		audioRef.current.play();
+		if (isPlaying) {
+			audioRef.current.pause();
+			audioRef.current.currentTime = 0;
+			setIsPlaying(false);
+		} else {
+			audioRef.current.volume = 0.2;
+			audioRef.current.play();
+			setIsPlaying(true);
+		}
 	};
 
 	return (
