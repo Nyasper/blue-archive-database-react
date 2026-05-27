@@ -35,15 +35,6 @@ export function Navbar() {
 						</Link>
 					</li>
 				))}
-				<li className={styles.navLi} style={{ marginLeft: 'auto', marginRight: '40px' }}>
-					<Link
-						to="/about"
-						className={`${styles.aNavbar} ${currentRoute === '/about' ? styles.currentRoute : ''
-							}`}
-					>
-						About
-					</Link>
-				</li>
 			</ul>
 		</nav>
 	);

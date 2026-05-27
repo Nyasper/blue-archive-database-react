@@ -7,7 +7,6 @@ import { CategoryList } from './pages/categoryList';
 const AllCharacters = lazy(() => import('./pages/allCharacters'));
 const CategorySelect = lazy(() => import('./pages/categorySelect'));
 const CharaDetails = lazy(() => import('./pages/charaDetails'));
-const About = lazy(() => import('./pages/about'));
 const Page404 = lazy(() => import('./pages/page404'));
 const AllCategories = lazy(() => import('./pages/categorySelect'));
 
@@ -32,7 +31,6 @@ export function Router() {
 					path="/characters/category/:categoryName/:categoryValue/:charaName"
 					element={<CharaDetails />}
 				/>
-				<Route path="about" element={<About />} />
 				<Route path="*" element={<Page404 />} />
 			</Routes>
 		</Suspense>
