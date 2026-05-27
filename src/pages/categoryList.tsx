@@ -17,6 +17,8 @@ export function CategoryList() {
 	const { students: allStudents } = useContext(StoreContext)!;
 
 	useEffect(() => {
+		if (!allStudents || allStudents.length === 0) return;
+
 		if (categoryName && !categoryValue) {
 			navigate(`/characters/category/${categoryName}`);
 		}
@@ -42,6 +44,7 @@ export function CategoryList() {
 			title={`${handleCategoryName(
 				categoryName as keyof Student
 			)}: ${handleCategoryValue(categoryName as any, categoryValue!)}`}
+			backUrl={`/characters/category/${categoryName}`}
 		/>
 	);
 }

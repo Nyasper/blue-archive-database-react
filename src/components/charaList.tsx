@@ -8,7 +8,7 @@ import type { Student } from '../models/student.model';
 import { getStudentMedia } from '../services/studentUtils';
 import { useIsMobile } from '../hooks/useIsMobile';
 
-export function CharaList({ title, students, error }: Props) {
+export function CharaList({ title, students, error, backUrl }: Props) {
 	const store = useContext(StoreContext);
 	const isMobile: boolean = useIsMobile();
 
@@ -80,7 +80,7 @@ export function CharaList({ title, students, error }: Props) {
 
 	return (
 		<>
-			<Header title={title} withSearchBar={true} handleSearch={handleSearch} />
+			<Header title={title} withSearchBar={true} handleSearch={handleSearch} backUrl={backUrl} />
 			<div id={styles.charaListContainer}>
 				<section>{content}</section>
 				<CharaListSideComponent
@@ -95,4 +95,5 @@ interface Props {
 	title: string;
 	students: Student[];
 	error: string | null;
+	backUrl?: string;
 }

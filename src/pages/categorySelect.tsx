@@ -19,8 +19,13 @@ export default function CategoryView() {
 
 	// const category = categoryName ? `category/${categoryName}` : 'category/all';
 	const { students } = useContext(StoreContext)!;
-	const allCategoriesKeys = Object.keys(students[0]);
+	const allCategoriesKeys = useMemo(() => {
+		if (!students || students.length === 0) return [];
+		return Object.keys(students[0]);
+	}, [students]);
+
 	const allCategories = useMemo(() => {
+		if (!students || students.length === 0) return [];
 		return getPropertyDataDistinct(
 			students,
 			categoryName as ExcludedCategoriesUrl
@@ -29,17 +34,21 @@ export default function CategoryView() {
 
 	// route param validation
 	const isSpecificCategory: boolean = allCategoriesKeys.includes(categoryName!);
-	const isInvalidParam =
-		!categoryName ||
-		allCategories.length === 0 ||
-		!allCategoriesKeys.includes(categoryName) ||
-		categoriesNoUrl.includes(categoryName as any);
+	const isInvalidParam = useMemo(() => {
+		if (!students || students.length === 0) return false;
+		return (
+			!categoryName ||
+			allCategories.length === 0 ||
+			!allCategoriesKeys.includes(categoryName) ||
+			categoriesNoUrl.includes(categoryName as any)
+		);
+	}, [students, categoryName, allCategories, allCategoriesKeys]);
 
 	useEffect(() => {
-		if (isInvalidParam) {
+		if (students.length > 0 && isInvalidParam) {
 			navigate('/characters/category/all');
 		}
-	}, [categoryName, allCategories, navigate]);
+	}, [students, isInvalidParam, navigate]);
 
 	function renderlinkList() {
 		return (
@@ -68,8 +77,13 @@ export default function CategoryView() {
 
 	return (
 		<div id={styles.categoryDivContainer}>
+			{isSpecificCategory && (
+				<Link to="/characters/category/all" className={styles.backButton}>
+					← Return to Categories
+				</Link>
+			)}
 			{isSpecificCategory ? (
-				<h2>Select a value for: {categoryName}</h2>
+				<h2>Select a value for: {handleCategoryName(categoryName as keyof Student)}</h2>
 			) : (
 				<h2>View characters by:</h2>
 			)}

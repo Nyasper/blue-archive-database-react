@@ -45,7 +45,7 @@ export function getPropertyDataDistinct(
 }
 
 export function handleCategoryName(categoryName: keyof Student): string {
-	if (categoryName === 'skinSet') return 'Skin';
+	if (categoryName === 'skinSet') return 'Skin Set';
 	else if (categoryName === 'releaseDate') return 'Release date';
 	else if (categoryName === 'audioUrl') return 'Audio url';
 	else if (categoryName === 'charaName') return 'Character name';
