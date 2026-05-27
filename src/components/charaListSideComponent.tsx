@@ -16,6 +16,13 @@ export function CharaListSideComponent({
 					
 					<Link to={currentChara.name} className={styles.imageLinkWrapper}>
 						<img
+							key={`ambient-${currentChara.url}`}
+							className={styles.ambientImage}
+							src={currentChara.url}
+							alt=""
+							draggable="false"
+						/>
+						<img
 							key={currentChara.url}
 							className={`${styles.selectedImage} ${styles.animationFadeBlur}`}
 							src={currentChara.url}

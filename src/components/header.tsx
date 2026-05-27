@@ -5,7 +5,6 @@ export function Header({ title, withSearchBar = false, handleSearch }: Props) {
 	return withSearchBar ? (
 		<header id={styles.headerContainer}>
 			<h1 className={styles.title}>{title}</h1>
-			<br />
 			<input
 				type="text"
 				className={styles.searchBar}
