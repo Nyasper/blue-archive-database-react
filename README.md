@@ -28,8 +28,8 @@ A React frontend for browsing Blue Archive character data. One of my earliest pr
 **ALL CHARACTERS:**  
 ![page-all-characters](/screenshots/characters-list.png)
 
-**ABOUT:**  
-![page-about](/screenshots/about.png)
+**CHARACTER DETAILS:**  
+![page-character-details](/screenshots/character-details.png)
 
 ## Notes
 
