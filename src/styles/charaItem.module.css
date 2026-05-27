@@ -45,14 +45,14 @@
 }
 
 .charaImage:hover {
+	filter: drop-shadow(0 0 10px var(--glow-color));
+}
+
+.charaImage:active {
 	filter: drop-shadow(0 0 15px var(--glow-color));
 	border-radius: 50%;
 }
 
 .charaItemContainer:active {
-	scale: 1.2;
-	transition-property: scale opacity;
-	opacity: 0.1;
-	filter: blur(1px);
-	transition: 0.4s ease;
+	transform: translateY(-1px) scale(0.98);
 }

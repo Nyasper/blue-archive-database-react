@@ -17,7 +17,7 @@ export function CharaListSideComponent({
 					<Link to={currentChara.name} className={styles.imageLinkWrapper}>
 						<img
 							key={currentChara.url}
-							className={`${styles.selectedImage} ${styles.animationSlide}`}
+							className={`${styles.selectedImage} ${styles.animationFadeBlur}`}
 							src={currentChara.url}
 							alt={currentChara.name}
 							draggable="false"
